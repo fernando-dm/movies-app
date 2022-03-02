@@ -1,11 +1,28 @@
-# Template jdbc con Hikari
-. Hikari
+# Template para usar jdbcTemplate con HikariCp
 
-. Flyway (para crear versionado de bases de datos):
-    
-    . En lugar de tener un file grande con todo mi SQL , puedo versionar los cambios.
-    . Ver de repetar el nombre de las carpetas para que funcione.
-    . Las tablas se crean solas cuando arranca la app (pero 1ero hay que crear la bd a mano).
+# Diagram
+![diagram](img/img.png)
+
+# Exercise
+- Add the ability to edit movies
+- Add `actor` table and associate them with movies
+  You will need to create a new migration called: `V1__ActorTable.sql` and the following sql to create the actor table
+
+```sql
+CREATE TABLE actor
+(
+    id    bigserial primary key,
+    name  TEXT NOT NULL,
+    movie bigint REFERENCES movie (id),
+    unique (name, movie)
+);
+```
+
+- Hikari
+- Flyway (para crear versionado de bases de datos):
+En lugar de tener un file grande con todo mi SQL , puedo versionar los cambios.
+- Ver de respetar el nombre de las carpetas para que funcione.
+- Las tablas se crean solas cuando arranca la app (pero 1ero hay que crear la bd a mano).
 
 
 ```xml
