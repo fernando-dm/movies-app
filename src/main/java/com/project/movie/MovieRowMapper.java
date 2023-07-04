@@ -18,10 +18,7 @@ public class MovieRowMapper implements RowMapper<Movie> {
         return new Movie(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
-                LocalDate.parse(resultSet.getString("release_date")),
-                resultSet.getArray("actor_list").toString().length() == 0 ?
-                        List.of(new Actor(null, null, null)) :
-                        getActorList(resultSet)
+                LocalDate.parse(resultSet.getString("release_date"))
         );
     }
 

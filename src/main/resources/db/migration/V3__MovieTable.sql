@@ -1,2 +1,2 @@
-ALTER TABLE movie
-ADD COLUMN actors TEXT;
+--ALTER TABLE movie
+--ADD COLUMN actors TEXT;

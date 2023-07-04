@@ -17,7 +17,7 @@ public class ActorDataAccessService implements ActorDao {
     @Override
     public Optional<List<Actor>> selectAllActors() {
         String sql = """
-                select * from project.public.actor;
+                select * from public.actor;
                 """;
 
         List<Actor> result = jdbcTemplate.query(sql, (rs, i) -> {
@@ -31,7 +31,7 @@ public class ActorDataAccessService implements ActorDao {
     @Override
     public int insertActor(Actor actor) {
         String sql = """
-                insert into project.public.actor(name, movie) values(?,?)
+                insert into public.actor(name, movie) values(?,?)
                 """;
 
         return jdbcTemplate.update(sql, actor.name(),actor.movieId());

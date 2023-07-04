@@ -7,6 +7,6 @@ import java.util.List;
 
 public record Movie(Integer id,
                     String name,
-                    LocalDate releaseDate,
-                    List<Actor> actors) {
+                    LocalDate releaseDate
+) {
 }

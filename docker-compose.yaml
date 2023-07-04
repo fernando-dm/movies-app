@@ -1,6 +1,7 @@
+version: '3.4'
 services:
   postgres:
-    container_name: postgresjdbc
+    container_name: db-movies
     image: postgres
     environment:
       POSTGRES_USER: postgres
@@ -14,20 +15,37 @@ services:
       - postgres
     restart: unless-stopped
 
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    networks:
-      - postgres
-    restart: unless-stopped
+  movies-backend:
+      image: movies:latest
+      container_name: movies-backend
+      env_file:
+        - movies.env
+      environment:
+        - SPRING_PROFILES_ACTIVE=dev
+        - spring.application.name=demo
+        - spring.mvc.locale=es_AR
+        - logging.level.org.hibernate.SQL=debug
+        - logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+      networks:
+        - postgres
+      ports:
+        - "8080:8080"
+      tty: false
+
+#  pgadmin:
+#    container_name: pgadmin_container
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - postgres
+#    restart: unless-stopped
 
 networks:
   postgres:

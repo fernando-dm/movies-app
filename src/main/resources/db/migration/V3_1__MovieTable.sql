@@ -1,2 +1,2 @@
-ALTER TABLE movie
-DROP COLUMN actors;
+--ALTER TABLE movie
+--DROP COLUMN actors;
