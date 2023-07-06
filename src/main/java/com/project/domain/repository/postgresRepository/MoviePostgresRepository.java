@@ -1,5 +1,7 @@
-package com.project.movie;
+package com.project.domain.repository.postgresRepository;
 
+import com.project.domain.movie.Movie;
+import com.project.domain.repository.MovieDao;
 import com.project.utils.mapper.MovieRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -8,11 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class MovieDataAccessService implements MovieDao {
+public class MoviePostgresRepository implements MovieDao {
     final JdbcTemplate jdbcTemplate;
 
-    public MovieDataAccessService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;}
+    public MoviePostgresRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public List<Movie> selectMovies() {

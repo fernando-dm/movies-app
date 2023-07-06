@@ -1,6 +1,8 @@
-package com.project.actor;
+package com.project.infrastructure.controller.actors;
 
 
+import com.project.domain.actor.Actor;
+import com.project.application.useCase.actors.ActorService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

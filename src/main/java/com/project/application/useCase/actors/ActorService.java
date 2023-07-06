@@ -1,5 +1,7 @@
-package com.project.actor;
+package com.project.application.useCase.actors;
 
+import com.project.domain.actor.Actor;
+import com.project.domain.repository.ActorDao;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

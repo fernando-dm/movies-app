@@ -1,4 +1,4 @@
-package com.project.config;
+package com.project.config.dataSource;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;

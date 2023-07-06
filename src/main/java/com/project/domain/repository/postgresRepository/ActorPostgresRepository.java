@@ -1,5 +1,7 @@
-package com.project.actor;
+package com.project.domain.repository.postgresRepository;
 
+import com.project.domain.actor.Actor;
+import com.project.domain.repository.ActorDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -7,12 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ActorDataAccessService implements ActorDao {
+public class ActorPostgresRepository implements ActorDao {
 
     private JdbcTemplate jdbcTemplate;
 
-    public ActorDataAccessService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;    }
+    public ActorPostgresRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public Optional<List<Actor>> selectAllActors() {
@@ -34,7 +37,7 @@ public class ActorDataAccessService implements ActorDao {
                 insert into public.actor(name, movie) values(?,?)
                 """;
 
-        return jdbcTemplate.update(sql, actor.name(),actor.movieId());
+        return jdbcTemplate.update(sql, actor.name(), actor.movieId());
     }
 
     @Override

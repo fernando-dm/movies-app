@@ -1,4 +1,4 @@
-package com.project.actor;
+package com.project.domain.actor;
 
 public record Actor(Integer id, String name, Integer movieId) {
 }

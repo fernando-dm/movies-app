@@ -1,4 +1,6 @@
-package com.project.actor;
+package com.project.domain.repository;
+
+import com.project.domain.actor.Actor;
 
 import java.util.List;
 import java.util.Optional;

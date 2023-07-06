@@ -1,4 +1,6 @@
-package com.project.movie;
+package com.project.domain.repository;
+
+import com.project.domain.movie.Movie;
 
 import java.util.List;
 import java.util.Optional;

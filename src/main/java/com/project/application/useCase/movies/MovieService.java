@@ -1,67 +1,59 @@
-package com.project.movie;
+package com.project.application.useCase.movies;
 
-import com.project.config.unleash.UnleashConfiguration;
+import com.project.domain.movie.Movie;
+import com.project.domain.repository.MovieDao;
 import com.project.exception.NotFoundException;
-import io.getunleash.ActivationStrategy;
-import io.getunleash.Unleash;
-import io.getunleash.UnleashContext;
+import com.project.utils.toggles.service.FeatureToggleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class MovieService {
     private final MovieDao movieDao;
-    private final Unleash unleash;
+    private final FeatureToggleService featureToggleService;
 
     private final static Logger logger = LoggerFactory.getLogger(MovieService.class);
 
-    public MovieService(MovieDao movieDao, Unleash unleash) {
+    public MovieService(MovieDao movieDao, FeatureToggleService featureToggleService) {
         this.movieDao = movieDao;
-        this.unleash = unleash;
+        this.featureToggleService = featureToggleService;
     }
 
-    public List<Movie> getMovies() {
-        return null;
+    public List<Movie> getByTenant(String tenant) {
+        boolean toggleIsActive = featureToggleService.isFeatureToggleActive2("tenantToggle",
+                Map.of("tenant", tenant));
+
+        return processMovies(toggleIsActive);
     }
-    public List<Movie> getMovies2(String tenantId) {
 
-        UnleashContext context = UnleashContext.builder()
-                .appName("movies-app")
-                .addProperty("tenant", tenantId)
-                .build();
+    public List<Movie> getByCompany(String company) {
+        boolean toggleIsActive = featureToggleService.isFeatureToggleActive2("companyToggle",
+                Map.of("company", company));
 
-        // tenantId: [a,b,c]
-        boolean toggleIsActive = unleash.isEnabled("mostrarTodo", context);
+        return processMovies(toggleIsActive);
+    }
 
-        List<ActivationStrategy> toggleStrategy = unleash.more().getFeatureToggleDefinition("mostrarTodo").get()
-                .getStrategies();
+    public List<Movie> getByTenantAndCompany(String tenantId, String company) {
+        boolean toggleIsActive = featureToggleService.isFeatureToggleActive2("tenantCompanyToggle",
+                Map.of("tenant", tenantId, "company", company));
 
-        boolean result = toggleStrategy.stream()
-                .filter(it -> it.getName().equals("tenant"))
-                .findFirst()
-                .map(obj -> obj.getParameters().values())
-                .orElse(Collections.emptyList())
-                .stream()
-                .flatMap(value -> Arrays.stream(value.split(",")))
-                .anyMatch(token -> token.trim().equals(tenantId));
+        return processMovies(toggleIsActive);
+    }
 
-//        Unleash unleash = new DefaultUnleash( new HcTenantsStrategy());
-//        UnleashConfiguration un = new UnleashConfiguration();
-//        boolean result2 = un.hcTenantsStrategy().isEnabled(context.getProperties(),context);
-//                .unleash().isEnabled("mostrarTodo", context);
-
+    private List<Movie> processMovies(boolean toggleIsActive) {
         if (toggleIsActive) {
-
+            logger.info("SE ACTIVO EL TOGGLE");
             List<Movie> movies = movieDao.selectMovies();
             logger.info(" devuelvo " + movies);
             return movies;
         }
+
+        logger.info("NOOOO SE ACTIVO EL TOGGLE");
 
         return movieDao.selectMovies()
                 .stream()
@@ -70,23 +62,9 @@ public class MovieService {
                 .toList();
     }
 
-//    private boolean isEnabled(String toggle, UnleashContext context, String tenantId) {
-////        UnleashContext context = UnleashContext.builder()
-////                .appName("movies-app")
-////                .addProperty("tenantId", "test1")
-////                .build();
-//        UnleashConfig config = new UnleashConfig.Builder()
-//                .appName("movies-app")
-//                .instanceId("1")
-//                .unleashAPI("http://localhost:4242/api")
-//                .apiKey("default:development.1ee5fb49a9f0f124853a2deee73a2da98d0ee36846ea400eff06e1fc")
-//                .build();
-//        Unleash unleash = new DefaultUnleash(config, new HcTenantsStrategy());
-//        boolean res = unleash.isEnabled("mostrarTodo", context);
-//
-//        return res;
-//
-//    }
+    public List<Movie> getMovies() {
+        return null;
+    }
 
     public void addNewMovie(Movie movie) {
         // TODO: check if movie exists

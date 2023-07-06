@@ -1,9 +1,6 @@
-package com.project.movie;
-
-import com.project.actor.Actor;
+package com.project.domain.movie;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public record Movie(Integer id, String name, LocalDate releaseDate) {
 }
