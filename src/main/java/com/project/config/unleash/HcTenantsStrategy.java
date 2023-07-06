@@ -15,7 +15,7 @@ public class HcTenantsStrategy implements Strategy {
 
     @Override
     public String getName() {
-        return "tenantId";
+        return "tenant";
     }
 
     @Override
@@ -25,8 +25,8 @@ public class HcTenantsStrategy implements Strategy {
 
     @Override  // aca deberia entrar, pero sin embargo no se sobre escribe, va directo al isEnabled de unleash
     public boolean isEnabled(Map<String, String> parameters, UnleashContext unleashContext) {
-        String[] tenantIds = parameters.get("tenantId").split(",");
-        String contextTenantId = unleashContext.getProperties().get("tenantId");
+        String[] tenantIds = parameters.get("tenant").split(",");
+        String contextTenantId = unleashContext.getProperties().get("tenant");
         return Arrays.asList(tenantIds).contains(contextTenantId);
     }
 

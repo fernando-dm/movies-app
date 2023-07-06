@@ -33,16 +33,17 @@ public class MovieService {
 
         UnleashContext context = UnleashContext.builder()
                 .appName("movies-app")
-                .addProperty("tenantId", tenantId)
+                .addProperty("tenant", tenantId)
                 .build();
 
-        boolean showAllMovies = unleash.isEnabled("mostrarTodo", context);
+        // tenantId: [a,b,c]
+        boolean toggleIsActive = unleash.isEnabled("mostrarTodo", context);
 
-//        boolean showAllMovies2 = isEnabled("mostrarTodo", context, tenantId);
-        List<ActivationStrategy> hola = unleash.more().getFeatureToggleDefinition("mostrarTodo").get()
+        List<ActivationStrategy> toggleStrategy = unleash.more().getFeatureToggleDefinition("mostrarTodo").get()
                 .getStrategies();
-        boolean result = hola.stream()
-                .filter(it -> it.getName().equals("tenantId"))
+
+        boolean result = toggleStrategy.stream()
+                .filter(it -> it.getName().equals("tenant"))
                 .findFirst()
                 .map(obj -> obj.getParameters().values())
                 .orElse(Collections.emptyList())
@@ -51,11 +52,11 @@ public class MovieService {
                 .anyMatch(token -> token.trim().equals(tenantId));
 
 //        Unleash unleash = new DefaultUnleash( new HcTenantsStrategy());
-        UnleashConfiguration un = new UnleashConfiguration();
+//        UnleashConfiguration un = new UnleashConfiguration();
 //        boolean result2 = un.hcTenantsStrategy().isEnabled(context.getProperties(),context);
 //                .unleash().isEnabled("mostrarTodo", context);
 
-        if (showAllMovies) {
+        if (toggleIsActive) {
 
             List<Movie> movies = movieDao.selectMovies();
             logger.info(" devuelvo " + movies);

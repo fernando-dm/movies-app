@@ -37,10 +37,10 @@ public class UnleashConfiguration {
                 .instanceId(instanceId)
                 .unleashAPI(apiUrl)
                 .apiKey(clientSecret)
-//                .fallbackStrategy(new HcTenantsStrategy()) puedo activarlo o no
                 .build();
 
-        return new DefaultUnleash(config,new HcTenantsStrategy());
+        return new DefaultUnleash(config);
+//        return new DefaultUnleash(config,new HcTenantsStrategy());
     }
 
     // Define your custom strategy here
