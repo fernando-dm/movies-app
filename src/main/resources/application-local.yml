@@ -20,4 +20,9 @@ unleash:
 
 #  clientSecret: "overridden-with-env-var"
 
+feature:
+  toggle:
+    service: "unleash"
+#    appName: "movies-app" // setear
+
 

@@ -3,7 +3,7 @@ package com.project.application.useCase.movies;
 import com.project.domain.movie.Movie;
 import com.project.domain.repository.MovieDao;
 import com.project.exception.NotFoundException;
-import com.project.utils.toggles.service.FeatureToggleService;
+import com.project.utils.toggles.features.FeatureToggleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,27 +19,27 @@ public class MovieService {
 
     private final static Logger logger = LoggerFactory.getLogger(MovieService.class);
 
-    public MovieService(MovieDao movieDao, FeatureToggleService featureToggleService) {
+    public MovieService(MovieDao movieDao, FeatureToggleService toggleService) {
         this.movieDao = movieDao;
-        this.featureToggleService = featureToggleService;
+        this.featureToggleService = toggleService;
     }
 
     public List<Movie> getByTenant(String tenant) {
-        boolean toggleIsActive = featureToggleService.isFeatureToggleActive2("tenantToggle",
+        boolean toggleIsActive = featureToggleService.isFeatureToggleActive("tenantToggle",
                 Map.of("tenant", tenant));
 
         return processMovies(toggleIsActive);
     }
 
     public List<Movie> getByCompany(String company) {
-        boolean toggleIsActive = featureToggleService.isFeatureToggleActive2("companyToggle",
+        boolean toggleIsActive = featureToggleService.isFeatureToggleActive("companyToggle",
                 Map.of("company", company));
 
         return processMovies(toggleIsActive);
     }
 
     public List<Movie> getByTenantAndCompany(String tenantId, String company) {
-        boolean toggleIsActive = featureToggleService.isFeatureToggleActive2("tenantCompanyToggle",
+        boolean toggleIsActive = featureToggleService.isFeatureToggleActive("tenantCompanyToggle",
                 Map.of("tenant", tenantId, "company", company));
 
         return processMovies(toggleIsActive);
