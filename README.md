@@ -60,3 +60,5 @@ Content-Type: application/json
 }
 ```
 
+docker build -t movies . 
+docker compose up -d

@@ -1,5 +1,6 @@
 package com.project.movie;
 
+import com.project.utils.mapper.MovieRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

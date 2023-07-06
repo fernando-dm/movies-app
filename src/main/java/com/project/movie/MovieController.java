@@ -16,6 +16,11 @@ public class MovieController {
         this.movieService = movieService;
     }
 
+    @GetMapping("/unleash/{tenantId}")
+    public List<Movie> listMovies2(@PathVariable ("tenantId") String tenantId) {
+        return movieService.getMovies2(tenantId);
+    }
+
     @GetMapping
     public List<Movie> listMovies() {
         return movieService.getMovies();

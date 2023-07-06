@@ -1,22 +1,91 @@
 package com.project.movie;
 
+import com.project.config.unleash.UnleashConfiguration;
 import com.project.exception.NotFoundException;
+import io.getunleash.ActivationStrategy;
+import io.getunleash.Unleash;
+import io.getunleash.UnleashContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MovieService {
     private final MovieDao movieDao;
+    private final Unleash unleash;
 
-    public MovieService(MovieDao movieDao) {
+    private final static Logger logger = LoggerFactory.getLogger(MovieService.class);
+
+    public MovieService(MovieDao movieDao, Unleash unleash) {
         this.movieDao = movieDao;
+        this.unleash = unleash;
     }
 
     public List<Movie> getMovies() {
-        return movieDao.selectMovies();
+        return null;
     }
+    public List<Movie> getMovies2(String tenantId) {
+
+        UnleashContext context = UnleashContext.builder()
+                .appName("movies-app")
+                .addProperty("tenantId", tenantId)
+                .build();
+
+        boolean showAllMovies = unleash.isEnabled("mostrarTodo", context);
+
+//        boolean showAllMovies2 = isEnabled("mostrarTodo", context, tenantId);
+        List<ActivationStrategy> hola = unleash.more().getFeatureToggleDefinition("mostrarTodo").get()
+                .getStrategies();
+        boolean result = hola.stream()
+                .filter(it -> it.getName().equals("tenantId"))
+                .findFirst()
+                .map(obj -> obj.getParameters().values())
+                .orElse(Collections.emptyList())
+                .stream()
+                .flatMap(value -> Arrays.stream(value.split(",")))
+                .anyMatch(token -> token.trim().equals(tenantId));
+
+//        Unleash unleash = new DefaultUnleash( new HcTenantsStrategy());
+        UnleashConfiguration un = new UnleashConfiguration();
+//        boolean result2 = un.hcTenantsStrategy().isEnabled(context.getProperties(),context);
+//                .unleash().isEnabled("mostrarTodo", context);
+
+        if (showAllMovies) {
+
+            List<Movie> movies = movieDao.selectMovies();
+            logger.info(" devuelvo " + movies);
+            return movies;
+        }
+
+        return movieDao.selectMovies()
+                .stream()
+                .findFirst()
+                .stream()
+                .toList();
+    }
+
+//    private boolean isEnabled(String toggle, UnleashContext context, String tenantId) {
+////        UnleashContext context = UnleashContext.builder()
+////                .appName("movies-app")
+////                .addProperty("tenantId", "test1")
+////                .build();
+//        UnleashConfig config = new UnleashConfig.Builder()
+//                .appName("movies-app")
+//                .instanceId("1")
+//                .unleashAPI("http://localhost:4242/api")
+//                .apiKey("default:development.1ee5fb49a9f0f124853a2deee73a2da98d0ee36846ea400eff06e1fc")
+//                .build();
+//        Unleash unleash = new DefaultUnleash(config, new HcTenantsStrategy());
+//        boolean res = unleash.isEnabled("mostrarTodo", context);
+//
+//        return res;
+//
+//    }
 
     public void addNewMovie(Movie movie) {
         // TODO: check if movie exists
@@ -24,7 +93,7 @@ public class MovieService {
                 .stream()
                 .anyMatch(movie1 -> movie.name().equals(movie1.name()));
         if (movieExists)
-            throw new IllegalStateException(String.format("Movie: %s, already exists",movie.name()));
+            throw new IllegalStateException(String.format("Movie: %s, already exists", movie.name()));
 
         int result = movieDao.insertMovie(movie);
         if (result != 1) {

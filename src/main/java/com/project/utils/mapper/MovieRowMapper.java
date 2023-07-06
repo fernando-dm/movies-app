@@ -1,6 +1,7 @@
-package com.project.movie;
+package com.project.utils.mapper;
 
 import com.project.actor.Actor;
+import com.project.movie.Movie;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

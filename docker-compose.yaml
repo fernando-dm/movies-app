@@ -22,7 +22,7 @@ services:
         - movies.env
       environment:
         - SPRING_PROFILES_ACTIVE=dev
-        - spring.application.name=demo
+        - spring.application.name=movies-app
         - spring.mvc.locale=es_AR
         - logging.level.org.hibernate.SQL=debug
         - logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
