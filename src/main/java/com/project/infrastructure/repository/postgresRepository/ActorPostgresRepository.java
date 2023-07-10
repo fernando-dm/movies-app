@@ -1,7 +1,7 @@
-package com.project.domain.repository.postgresRepository;
+package com.project.infrastructure.repository.postgresRepository;
 
 import com.project.domain.actor.Actor;
-import com.project.domain.repository.ActorDao;
+import com.project.domain.actor.ActorRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ActorPostgresRepository implements ActorDao {
+public class ActorPostgresRepository implements ActorRepository {
 
     private JdbcTemplate jdbcTemplate;
 

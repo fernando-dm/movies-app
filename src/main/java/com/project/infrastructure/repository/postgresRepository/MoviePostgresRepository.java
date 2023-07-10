@@ -1,8 +1,8 @@
-package com.project.domain.repository.postgresRepository;
+package com.project.infrastructure.repository.postgresRepository;
 
 import com.project.domain.movie.Movie;
-import com.project.domain.repository.MovieDao;
-import com.project.utils.mapper.MovieRowMapper;
+import com.project.domain.movie.MovieRepository;
+import com.project.infrastructure.repository.mapper.MovieRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class MoviePostgresRepository implements MovieDao {
+public class MoviePostgresRepository implements MovieRepository {
     final JdbcTemplate jdbcTemplate;
 
     public MoviePostgresRepository(JdbcTemplate jdbcTemplate) {

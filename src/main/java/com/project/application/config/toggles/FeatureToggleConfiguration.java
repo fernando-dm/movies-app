@@ -1,4 +1,4 @@
-package com.project.config.toggles;
+package com.project.application.config.toggles;
 
 import com.project.utils.toggles.features.FeatureToggleService;
 import com.project.utils.toggles.features.togglzRepository.TogglzFeatureToggleService;

@@ -1,7 +1,7 @@
 package com.project.application.useCase.actors;
 
 import com.project.domain.actor.Actor;
-import com.project.domain.repository.ActorDao;
+import com.project.domain.actor.ActorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,16 +10,16 @@ import java.util.Optional;
 @Service
 public class ActorService {
 
-    private final ActorDao actorDao;
+    private final ActorRepository actorRepository;
 
-    public ActorService(ActorDao actorDao) {
-        this.actorDao = actorDao;    }
+    public ActorService(ActorRepository actorRepository) {
+        this.actorRepository = actorRepository;    }
 
     public Optional<List<Actor>> getActors() {
-        return actorDao.selectAllActors();
+        return actorRepository.selectAllActors();
     }
 
     public int addActor(Actor actor){
-        return this.actorDao.insertActor(actor);
+        return this.actorRepository.insertActor(actor);
     }
 }

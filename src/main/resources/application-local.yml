@@ -23,6 +23,7 @@ unleash:
 feature:
   toggle:
     service: "unleash"
-#    appName: "movies-app" // setear
+    appName: "movies-app"
+
 
 

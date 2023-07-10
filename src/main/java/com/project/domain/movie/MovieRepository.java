@@ -1,11 +1,9 @@
-package com.project.domain.repository;
-
-import com.project.domain.movie.Movie;
+package com.project.domain.movie;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface MovieDao {
+public interface MovieRepository {
     List<Movie> selectMovies();
     int insertMovie(Movie movie);
     int deleteMovie(int id);

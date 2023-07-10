@@ -1,9 +1,10 @@
 package com.project.application.useCase.movies;
 
 import com.project.domain.movie.Movie;
-import com.project.domain.repository.MovieDao;
+import com.project.domain.movie.MovieRepository;
 import com.project.exception.NotFoundException;
 import com.project.utils.toggles.features.FeatureToggleService;
+import com.project.utils.toggles.features.FeatureContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,19 +15,29 @@ import java.util.Optional;
 
 @Service
 public class MovieService {
-    private final MovieDao movieDao;
+    private final MovieRepository movieRepository;
     private final FeatureToggleService featureToggleService;
-
     private final static Logger logger = LoggerFactory.getLogger(MovieService.class);
 
-    public MovieService(MovieDao movieDao, FeatureToggleService toggleService) {
-        this.movieDao = movieDao;
+    public MovieService(MovieRepository movieRepository, FeatureToggleService toggleService) {
+        this.movieRepository = movieRepository;
         this.featureToggleService = toggleService;
     }
 
-    public List<Movie> getByTenant(String tenant) {
-        boolean toggleIsActive = featureToggleService.isFeatureToggleActive("tenantToggle",
-                Map.of("tenant", tenant));
+    public List<Movie> getByTenant2(String tenant) { //nuevo
+        boolean toggleIsActive = featureToggleService
+                .isFeatureToggleActive(
+                        "tenantToggle",
+                        new FeatureContext(tenant));
+
+        return processMovies(toggleIsActive);
+    }
+
+    public List<Movie> getByTenant(String tenant) { //DEPRECAR mapa
+        boolean toggleIsActive = featureToggleService
+                .isFeatureToggleActive(
+                        "tenantToggle",
+                        Map.of("tenant", tenant));
 
         return processMovies(toggleIsActive);
     }
@@ -38,24 +49,31 @@ public class MovieService {
         return processMovies(toggleIsActive);
     }
 
-    public List<Movie> getByTenantAndCompany(String tenantId, String company) {
+    public List<Movie> getByTenantAndCompany(String tenant, String companyId) {
         boolean toggleIsActive = featureToggleService.isFeatureToggleActive("tenantCompanyToggle",
-                Map.of("tenant", tenantId, "company", company));
+                Map.of("tenant", tenant, "company", companyId));
 
+        return processMovies(toggleIsActive);
+    }
+
+    public List<Movie> getByTenantAndCompany2(String tenant, String companyId) {
+        boolean toggleIsActive = featureToggleService
+                .isFeatureToggleActive("tenantCompanyToggle",
+                        new FeatureContext(tenant, companyId));
         return processMovies(toggleIsActive);
     }
 
     private List<Movie> processMovies(boolean toggleIsActive) {
         if (toggleIsActive) {
             logger.info("SE ACTIVO EL TOGGLE");
-            List<Movie> movies = movieDao.selectMovies();
+            List<Movie> movies = movieRepository.selectMovies();
             logger.info(" devuelvo " + movies);
             return movies;
         }
 
         logger.info("NOOOO SE ACTIVO EL TOGGLE");
 
-        return movieDao.selectMovies()
+        return movieRepository.selectMovies()
                 .stream()
                 .findFirst()
                 .stream()
@@ -68,22 +86,22 @@ public class MovieService {
 
     public void addNewMovie(Movie movie) {
         // TODO: check if movie exists
-        boolean movieExists = movieDao.selectMovies()
+        boolean movieExists = movieRepository.selectMovies()
                 .stream()
                 .anyMatch(movie1 -> movie.name().equals(movie1.name()));
         if (movieExists)
             throw new IllegalStateException(String.format("Movie: %s, already exists", movie.name()));
 
-        int result = movieDao.insertMovie(movie);
+        int result = movieRepository.insertMovie(movie);
         if (result != 1) {
             throw new IllegalStateException("oops something went wrong");
         }
     }
 
     public void deleteMovie(Integer id) {
-        Optional<Movie> movies = movieDao.selectMovieById(id);
+        Optional<Movie> movies = movieRepository.selectMovieById(id);
         movies.ifPresentOrElse(movie -> {
-                    int result = movieDao.deleteMovie(id);
+                    int result = movieRepository.deleteMovie(id);
                     if (result != 1)
                         throw new IllegalStateException("oops could not delete movie");
                 },
@@ -93,16 +111,16 @@ public class MovieService {
     }
 
     public Movie getMovie(int id) {
-        return movieDao.selectMovieById(id)
+        return movieRepository.selectMovieById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Movie with id %s not found", id)));
     }
 
     public Movie updateMovie(Movie movieToUpdate) {
-        Optional<Movie> movie = Optional.ofNullable(movieDao.selectMovieById(movieToUpdate.id())
+        Optional<Movie> movie = Optional.ofNullable(movieRepository.selectMovieById(movieToUpdate.id())
                 .orElseThrow(() -> new NotFoundException(String.format("Movie with id %s not found", movieToUpdate.id()))));
 
         movie.ifPresentOrElse(movie1 -> {
-                    movieDao.update(movieToUpdate);
+                    movieRepository.update(movieToUpdate);
                 },
                 () -> {
                     throw new NotFoundException(String.format("Movie with id %s cant not be updated", movieToUpdate.id()));

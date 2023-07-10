@@ -1,5 +1,6 @@
 package com.project.utils.toggles.features.unleashRepository;
 
+import com.project.utils.toggles.features.FeatureContext;
 import com.project.utils.toggles.features.FeatureToggleService;
 import io.getunleash.Unleash;
 import io.getunleash.UnleashContext;
@@ -16,6 +17,20 @@ public class UnleashFeatureToggleService implements FeatureToggleService {
     }
 
     @Override
+    public boolean isFeatureToggleActive(String toggleName, FeatureContext featureContext) {
+        UnleashContext.Builder contextBuilder = UnleashContext.builder()
+                .appName("movies-app")
+                .addProperty("tenant", featureContext.getTenant());
+
+        if (featureContext.getCompanyId() != null) {
+            contextBuilder.addProperty("company", featureContext.getCompanyId());
+        }
+
+        UnleashContext context = contextBuilder.build();
+        return unleash.isEnabled(toggleName, context);
+    }
+
+    @Override
     public boolean isFeatureToggleActive(String toggleName, Map<String, String> properties) {
         UnleashContext.Builder contextBuilder = UnleashContext
                 .builder()
@@ -25,5 +40,6 @@ public class UnleashFeatureToggleService implements FeatureToggleService {
         UnleashContext context = contextBuilder.build();
         return unleash.isEnabled(toggleName, context);
     }
+
 }
 

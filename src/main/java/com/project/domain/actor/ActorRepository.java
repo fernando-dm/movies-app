@@ -1,11 +1,9 @@
-package com.project.domain.repository;
-
-import com.project.domain.actor.Actor;
+package com.project.domain.actor;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ActorDao {
+public interface ActorRepository {
 
     Optional<List<Actor>> selectAllActors();
     int insertActor(Actor actor);

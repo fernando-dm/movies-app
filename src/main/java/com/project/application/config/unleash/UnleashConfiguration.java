@@ -1,4 +1,4 @@
-package com.project.config.unleash;
+package com.project.application.config.unleash;
 
 import io.getunleash.DefaultUnleash;
 import io.getunleash.Unleash;

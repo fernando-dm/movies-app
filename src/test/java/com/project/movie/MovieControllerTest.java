@@ -1,6 +1,6 @@
 package com.project.movie;
 
-import com.project.infrastructure.controller.movies.MovieController;
+import com.project.application.MovieController;
 import com.project.application.useCase.movies.MovieService;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;

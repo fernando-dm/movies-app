@@ -1,4 +1,4 @@
-package com.project.infrastructure.controller.actors;
+package com.project.application;
 
 
 import com.project.domain.actor.Actor;

@@ -1,4 +1,4 @@
-package com.project.infrastructure.controller.movies;
+package com.project.application;
 
 import com.project.domain.movie.Movie;
 import com.project.application.useCase.movies.MovieService;
@@ -41,7 +41,7 @@ public class MovieController {
     public List<Movie> listByTenantAndCompany(
             @PathVariable("tenantId") String tenantId,
             @PathVariable("company") String company) {
-        return movieService.getByTenantAndCompany(tenantId, company);
+        return movieService.getByTenantAndCompany2(tenantId, company);
     }
 
     @GetMapping

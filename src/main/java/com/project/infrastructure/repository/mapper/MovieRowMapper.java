@@ -1,4 +1,4 @@
-package com.project.utils.mapper;
+package com.project.infrastructure.repository.mapper;
 
 import com.project.domain.actor.Actor;
 import com.project.domain.movie.Movie;
