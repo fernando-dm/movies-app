@@ -5,6 +5,7 @@ import com.project.domain.movie.MovieRepository;
 import com.project.exception.NotFoundException;
 import com.project.utils.toggles.features.FeatureToggleService;
 import com.project.utils.toggles.features.FeatureContext;
+import com.project.utils.toggles.features.TogglesNamesEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,15 +25,6 @@ public class MovieService {
         this.featureToggleService = toggleService;
     }
 
-    public List<Movie> getByTenant2(String tenant) { //nuevo
-        boolean toggleIsActive = featureToggleService
-                .isFeatureToggleActive(
-                        "tenantToggle",
-                        new FeatureContext(tenant));
-
-        return processMovies(toggleIsActive);
-    }
-
     public List<Movie> getByTenant(String tenant) { //DEPRECAR mapa
         boolean toggleIsActive = featureToggleService
                 .isFeatureToggleActive(
@@ -49,16 +41,27 @@ public class MovieService {
         return processMovies(toggleIsActive);
     }
 
-    public List<Movie> getByTenantAndCompany(String tenant, String companyId) {
-        boolean toggleIsActive = featureToggleService.isFeatureToggleActive("tenantCompanyToggle",
-                Map.of("tenant", tenant, "company", companyId));
+
+    //    public List<Movie> getByTenantAndCompany(String tenant, String companyId) {
+//        boolean toggleIsActive = featureToggleService
+//        .isFeatureToggleActive("tenantCompanyToggle",
+//                Map.of("tenant", tenant, "company", companyId));
+//
+//        return processMovies(toggleIsActive);
+//    }
+    public List<Movie> getByTenant2(String tenant) { //nuevo
+        boolean toggleIsActive = featureToggleService
+                .isFeatureToggleActive(
+                        TogglesNamesEnum.TENANT_COMPANY_TOGGLE,
+//                        "tenantToggle",
+                        new FeatureContext(tenant));
 
         return processMovies(toggleIsActive);
     }
 
     public List<Movie> getByTenantAndCompany2(String tenant, String companyId) {
         boolean toggleIsActive = featureToggleService
-                .isFeatureToggleActive("tenantCompanyToggle",
+                .isFeatureToggleActive(TogglesNamesEnum.TENANT_COMPANY_TOGGLE,
                         new FeatureContext(tenant, companyId));
         return processMovies(toggleIsActive);
     }

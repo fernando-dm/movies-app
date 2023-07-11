@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.project</groupId>
-    <artifactId>movies</artifactId>
+    <artifactId>movies-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>movies-app</name>
     <description>Demo project for unleash FT</description>

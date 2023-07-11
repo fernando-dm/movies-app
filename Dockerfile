@@ -21,6 +21,5 @@ ARG DEPENDENCY=/build/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-#ENTRYPOINT ["java","-cp","app:app/lib/*","gob.afip.themis.medidascautelares.MedidasCautelaresApplication"]
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.project.MoviesPocApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.project.MoviesApplication"]
 

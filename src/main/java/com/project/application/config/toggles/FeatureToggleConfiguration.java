@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Primary;
 import org.togglz.core.manager.FeatureManager;
 
 @Configuration
-//@ConfigurationProperties(prefix = "feature")
 public class FeatureToggleConfiguration {
 
     @Value("${feature.toggle.service}")

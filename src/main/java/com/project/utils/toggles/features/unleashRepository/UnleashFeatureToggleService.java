@@ -2,6 +2,7 @@ package com.project.utils.toggles.features.unleashRepository;
 
 import com.project.utils.toggles.features.FeatureContext;
 import com.project.utils.toggles.features.FeatureToggleService;
+import com.project.utils.toggles.features.TogglesNames;
 import io.getunleash.Unleash;
 import io.getunleash.UnleashContext;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class UnleashFeatureToggleService implements FeatureToggleService {
     }
 
     @Override
-    public boolean isFeatureToggleActive(String toggleName, FeatureContext featureContext) {
+    public boolean isFeatureToggleActive(TogglesNames toggleName, FeatureContext featureContext) {
         UnleashContext.Builder contextBuilder = UnleashContext.builder()
                 .appName("movies-app")
                 .addProperty("tenant", featureContext.getTenant());
@@ -27,7 +28,7 @@ public class UnleashFeatureToggleService implements FeatureToggleService {
         }
 
         UnleashContext context = contextBuilder.build();
-        return unleash.isEnabled(toggleName, context);
+        return unleash.isEnabled(toggleName.getToggleName(), context);
     }
 
     @Override

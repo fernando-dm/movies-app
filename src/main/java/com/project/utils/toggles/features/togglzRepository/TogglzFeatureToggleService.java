@@ -2,6 +2,7 @@ package com.project.utils.toggles.features.togglzRepository;
 
 import com.project.utils.toggles.features.FeatureToggleService;
 import com.project.utils.toggles.features.FeatureContext;
+import com.project.utils.toggles.features.TogglesNames;
 import org.springframework.stereotype.Service;
 import org.togglz.core.manager.FeatureManager;
 
@@ -20,7 +21,7 @@ public class TogglzFeatureToggleService implements FeatureToggleService {
     }
 
     @Override
-    public boolean isFeatureToggleActive(String toggleName, FeatureContext context) {
+    public boolean isFeatureToggleActive(TogglesNames toggleName, FeatureContext context) {
         return false;
     }
 }

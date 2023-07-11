@@ -23,7 +23,5 @@ unleash:
 feature:
   toggle:
     service: "unleash"
-    appName: "movies-app"
-
 
 
