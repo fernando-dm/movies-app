@@ -1,14 +1,12 @@
 package com.project.application.config.toggles;
 
-import com.project.utils.toggles.features.FeatureToggleService;
-import com.project.utils.toggles.features.togglzRepository.TogglzFeatureToggleService;
-import com.project.utils.toggles.features.unleashRepository.UnleashFeatureToggleService;
 import io.getunleash.Unleash;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.togglz.core.manager.FeatureManager;
+import com.workia.application.FeatureToggleService;
+import com.workia.application.UnleashFeatureToggleService;
 
 @Configuration
 public class FeatureToggleConfiguration {
@@ -16,11 +14,9 @@ public class FeatureToggleConfiguration {
     @Value("${feature.toggle.service}")
     private String toggleActive;
 
-    private final FeatureManager featureManager;
     private final Unleash unleash;
 
-    public FeatureToggleConfiguration(FeatureManager featureManager, Unleash unleash) {
-        this.featureManager = featureManager;
+    public FeatureToggleConfiguration(Unleash unleash) {
         this.unleash = unleash;
     }
 
@@ -29,7 +25,7 @@ public class FeatureToggleConfiguration {
     public FeatureToggleService featureToggleService() {
         return switch (toggleActive) {
             case "unleash" -> createUnleashFeatureToggleService();
-            case "togglz" -> createTogglzFeatureToggleService();
+            case "other" -> createOtherFeatureToggleService();
             default -> throw new IllegalArgumentException("Invalid feature toggle service configuration");
         };
     }
@@ -38,8 +34,9 @@ public class FeatureToggleConfiguration {
         return new UnleashFeatureToggleService(unleash);
     }
 
-    private FeatureToggleService createTogglzFeatureToggleService() {
-        return new TogglzFeatureToggleService(featureManager);
+    private FeatureToggleService createOtherFeatureToggleService() {
+        return null;
+//        return new OtherFeatureToggleService(featureManager);
     }
 
 }

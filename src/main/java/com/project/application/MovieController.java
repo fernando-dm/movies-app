@@ -18,36 +18,38 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-//    @GetMapping("/unleash/{tenantId}/{company}")
-//    public List<Movie> listByTenantAndCompany(
-//            @PathVariable ("tenantId") String tenantId,
-//            @PathVariable ("company") String company) {
-//        return movieService.getByTenantAndCompany(tenantId, company);
-//    }
-
-    @GetMapping("/unleash/tenant/{tenantId}")
-    public List<Movie> listByTenant(
-            @PathVariable("tenantId") String tenantId) {
-        return movieService.getByTenant(tenantId);
-    }
-
-    @GetMapping("/unleash/company/{company}")
-    public List<Movie> listByCompany(
-            @PathVariable("company") String company) {
-        return movieService.getByCompany(company);
-    }
-
-    @GetMapping("/unleash/tenant/{tenantId}/company/{company}")
-    public List<Movie> listByTenantAndCompany(
-            @PathVariable("tenantId") String tenantId,
-            @PathVariable("company") String company) {
-        return movieService.getByTenantAndCompany2(tenantId, company);
-    }
-
+    @Deprecated(since = "Service to get deprecated in next version", forRemoval = true)
     @GetMapping
     public List<Movie> listMovies() {
         return movieService.getMovies();
     }
+
+    @GetMapping("/premium/tenant/{tenantId}")
+    public List<Movie> listPremiumMoviesByTenant(
+            @PathVariable("tenantId") String tenantId) {
+        return movieService.getMoviesByTenant(tenantId);
+    }
+
+    @GetMapping("/premium/tenant/{tenant}/company/{companyId}")
+    public List<Movie> listPremiumMoviesByTenantAndCompany(
+            @PathVariable("tenant") String tenant,
+            @PathVariable("companyId") String companyId) {
+        return movieService.getByTenantAndCompany(tenant, companyId);
+    }
+
+    @GetMapping("/premium/custom/tenant/{tenantId}")
+    public List<Movie> listPremiumMoviesByTenantWithCustomProperties(
+            @PathVariable("tenantId") String tenantId) {
+        return movieService.getMoviesByTenantWithCustomProperties(tenantId);
+    }
+
+    @GetMapping("/premium/custom/tenant/{tenant}/company/{companyId}")
+    public List<Movie> listPremiumMoviesByTenantAndCompanyWithCustomProperties(
+            @PathVariable("tenant") String tenant,
+            @PathVariable("companyId") String companyId) {
+        return movieService.getByTenantAndCompanyWithCustomProperties(tenant, companyId);
+    }
+
 
     @GetMapping("{id}")
     public Movie getMovieId(@PathVariable("id") Integer id) {
