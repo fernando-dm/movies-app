@@ -8,18 +8,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ActorService {
+public class FindActors {
 
     private final ActorRepository actorRepository;
 
-    public ActorService(ActorRepository actorRepository) {
-        this.actorRepository = actorRepository;    }
+    public FindActors(ActorRepository actorRepository) {
+        this.actorRepository = actorRepository;
+    }
 
     public Optional<List<Actor>> getActors() {
         return actorRepository.selectAllActors();
-    }
-
-    public int addActor(Actor actor){
-        return this.actorRepository.insertActor(actor);
     }
 }

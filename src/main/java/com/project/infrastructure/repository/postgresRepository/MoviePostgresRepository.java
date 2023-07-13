@@ -21,22 +21,17 @@ public class MoviePostgresRepository implements MovieRepository {
     public List<Movie> selectMovies() {
         String sql = """
                  select  m.*
-                 --, array_to_string(array_agg(a.id||', '||a.name||', '||a.movie), '; ') AS actor_list
                 from public.movie m
-                         --left join project.public.actor a on
-                        --m.id = a.movie
                 group by m.id, m.name, m.release_date; """;
 
         return jdbcTemplate.query(sql, new MovieRowMapper());
     }
 
-    // ver como agrego los valores de actores a movies como arreglo/lista
     @Override
     public Optional<Movie> selectMovieById(int id) {
 
         String sql = """
                  select  m.*
-                 --,array_to_string(array_agg(a.id||', '||a.name||', '||a.movie), '; ') AS actor_list
                 from public.movie m
                          --left join public.actor a on
                         --m.id = a.movie 

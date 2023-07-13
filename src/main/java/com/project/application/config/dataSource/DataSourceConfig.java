@@ -11,18 +11,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class DataSourceConfig {
 
-    // Los ds proveen formas para los clientes de conectarse a jdbc
-    // hay varios, tomcatCP , HikariCP (connection pool)
     @Bean
-    @Primary    //si tengo varios ds, elijo 1 como primary
-    @ConfigurationProperties("app.datasource.main") // tomo la conf del yaml de application == property
+    @Primary
+    @ConfigurationProperties("app.datasource.main")
     public HikariDataSource hikariDataSource() {
         return DataSourceBuilder
                 .create()
                 .type(HikariDataSource.class)
                 .build();}
 
-    // si hay multiples DS , la forma de trabajar es creando un jdbcTemp para cada uno
     @Bean
     public JdbcTemplate jdbcTemplate(HikariDataSource hikariDataSource){
 

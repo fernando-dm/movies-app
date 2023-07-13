@@ -3,8 +3,8 @@ package com.project.application.toggles;
 import com.workia.application.TogglesNames;
 
 public enum ToggleAdHoc implements TogglesNames {
-    CUSTOM_TENANT_COMPANY_TOGGLE_NAME("tenantCompanyToggle"),
-    CUSTOM_TENANT_TOGGLE_NAME("tenantToggle")
+    CUSTOM_TENANT_COMPANY_TOGGLE_NAME("premiumByTenant"),
+    CUSTOM_TENANT_TOGGLE_NAME("otherTenantToggle")
     ;
 
     private final String toggleName;

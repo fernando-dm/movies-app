@@ -1,12 +1,12 @@
 package com.project.application.config.toggles;
 
+import com.workia.application.FeatureToggleService;
+import com.workia.application.UnleashFeatureToggleService;
 import io.getunleash.Unleash;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import com.workia.application.FeatureToggleService;
-import com.workia.application.UnleashFeatureToggleService;
 
 @Configuration
 public class FeatureToggleConfiguration {

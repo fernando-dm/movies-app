@@ -2,7 +2,7 @@ app:
   datasource:
     main:
       driver-class-name: org.postgresql.Driver
-      jdbc-url: jdbc:postgresql://db-movies:5432/postgres   #project
+      jdbc-url: jdbc:postgresql://localhost:5432/postgres   #project
       password: 'postgres'
       pool-size: 30
       username: postgres
@@ -13,8 +13,15 @@ server:
     include-message: always
 
 unleash:
-  api-url: http://localhost:4242/api
-  app-name: movies-app
+  apiUrl: http://localhost:4242/api
+  appName: movies-app
+  clientSecret: "default:development.1ee5fb49a9f0f124853a2deee73a2da98d0ee36846ea400eff06e1fc"
+  instanceId: "1"
 
+#  clientSecret: "overridden-with-env-var"
+
+feature:
+  toggle:
+    service: "unleash"
 
 

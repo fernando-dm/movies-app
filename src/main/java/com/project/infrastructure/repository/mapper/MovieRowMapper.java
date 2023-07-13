@@ -22,22 +22,4 @@ public class MovieRowMapper implements RowMapper<Movie> {
                 LocalDate.parse(resultSet.getString("release_date"))
         );
     }
-
-    private List<Actor> getActorList(ResultSet rs) throws SQLException {
-        List<Actor> actorList = new ArrayList<Actor>();
-        List<String> actors = Arrays.stream(rs.getArray("actor_list")
-                        .toString()
-                        .split(";"))
-                .map(String::trim)
-                .collect(Collectors.toList());
-
-        for (String actor : actors) {
-            actorList.add(new Actor(
-                    Integer.parseInt(actor.split(",")[0].trim()),
-                    actor.split(",")[1],
-                    Integer.parseInt(actor.split(",")[2].trim())
-            ));
-        }
-        return actorList;
-    }
 }
