@@ -1,0 +1,65 @@
+version: '3.4'
+services:
+  postgres:
+    container_name: db-movies
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - movies-net
+    restart: unless-stopped
+
+  movies-backend:
+      image: movies:v0.0.1
+      container_name: movies-backend
+      env_file:
+        - movies.env
+      environment:
+        - SPRING_PROFILES_ACTIVE=docker
+        - spring.application.name=movies-app
+        - spring.mvc.locale=es_AR
+        - logging.level.org.hibernate.SQL=debug
+        - logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+        - UNLEASH_API_URL=http://unleash-server:4242/api
+        - UNLEASH_APP_NAME=movies-app
+        - UNLEASH_CLIENT_SECRET=default:development.1ee5fb49a9f0f124853a2deee73a2da98d0ee36846ea400eff06e1fc
+        - UNLEASH_INSTANCE_ID=1
+
+      networks:
+        - movies-net
+        - unleash
+      ports:
+        - "8080:8080"
+      tty: false
+
+#  pgadmin:
+#    container_name: pgadmin_container
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - movies-net
+#    restart: unless-stopped
+
+networks:
+  movies-net:
+    driver: bridge
+  unleash:
+    external: true
+
+
+volumes:
+  postgres:
+#  pgadmin:
