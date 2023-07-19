@@ -59,6 +59,17 @@
             <version>8.2.0</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>com.workia</groupId>-->
+<!--            <artifactId>feature-toggle-sdk</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.hcwork.feature-toggles</groupId>
+            <artifactId>hcwork-feature-toggles-sdk</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.togglz</groupId>
@@ -72,12 +83,6 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.workia</groupId>
-            <artifactId>feature-toggle-sdk-id</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
 
         <dependency>

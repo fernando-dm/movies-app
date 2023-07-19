@@ -1,6 +1,7 @@
 package com.project.application.toggles;
 
-import com.workia.application.TogglesNames;
+
+import com.hcwork.toggles.TogglesNames;
 
 public enum ToggleAdHoc implements TogglesNames {
     CUSTOM_TENANT_COMPANY_TOGGLE_NAME("premiumByTenant"),

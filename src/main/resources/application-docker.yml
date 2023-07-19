@@ -12,16 +12,15 @@ server:
     include-binding-errors: always
     include-message: always
 
-unleash:
-  apiUrl: http://unleash-server:4242/api
-  appName: movies-app
-  clientSecret: "default:development.1ee5fb49a9f0f124853a2deee73a2da98d0ee36846ea400eff06e1fc"
-  instanceId: "1"
-
-#  clientSecret: "overridden-with-env-var"
 
 feature:
+  apiUrl: http://localhost:4242/api
+  appName: app-name
+  clientSecret: "default:development.1ee5fb49a9f0f124853a2deee73a2da98d0ee36846ea400eff06e1fc"
+  instanceId: "1"
   toggle:
     service: "unleash"
+
+#  clientSecret: "overridden-with-env-var"
 
 

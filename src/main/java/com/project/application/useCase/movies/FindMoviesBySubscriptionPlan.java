@@ -1,17 +1,16 @@
 package com.project.application.useCase.movies;
 
-import com.project.application.config.unleash.UnleashConfiguration;
+import com.hcwork.config.unleash.UnleashConfiguration;
+import com.hcwork.context.FeatureContextImpl;
+import com.hcwork.service.FeatureToggleService;
+import com.hcwork.service.UnleashFeatureToggleService;
 import com.project.application.toggles.ToggleAdHoc;
 import com.project.domain.movie.Movie;
 import com.project.domain.movie.MovieRepository;
-import com.workia.application.FeatureContextImpl;
-import com.workia.application.FeatureToggleService;
-import com.workia.application.UnleashFeatureToggleService;
 import io.getunleash.Unleash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
