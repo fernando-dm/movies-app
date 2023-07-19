@@ -15,7 +15,7 @@ server:
 
 feature:
   apiUrl: http://localhost:4242/api
-  appName: app-name
+  appName: movies-app
   clientSecret: "default:development.1ee5fb49a9f0f124853a2deee73a2da98d0ee36846ea400eff06e1fc"
   instanceId: "1"
   toggle:
