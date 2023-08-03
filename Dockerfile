@@ -6,8 +6,8 @@ COPY pom.xml .
 COPY src src
 
 # Install the specific JAR as a Maven dependency
-COPY target/dependency/feature-toggle-sdk-id-1.0-SNAPSHOT.jar feature-toggle-sdk-id-1.0-SNAPSHOT.jar
-RUN mvn install:install-file -Dfile=feature-toggle-sdk-id-1.0-SNAPSHOT.jar -DgroupId=com.workia -DartifactId=feature-toggle-sdk-id -Dversion=1.0-SNAPSHOT -Dpackaging=jar
+COPY target/dependency/company-feature-toggles-sdk-1.0-SNAPSHOT.jar company-feature-toggles-sdk-1.0-SNAPSHOT.jar
+RUN mvn install:install-file -Dfile=company-feature-toggles-sdk-1.0-SNAPSHOT.jar -DgroupId=com.company.feature-toggles -DartifactId=company-feature-toggles-sdk -Dversion=1.0-SNAPSHOT -Dpackaging=jar
 
 
 COPY pom.xml .

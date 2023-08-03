@@ -60,26 +60,10 @@
         </dependency>
 
         <dependency>
-            <groupId>com.workia</groupId>
-            <artifactId>feature-toggle-sdk-id</artifactId>
+            <groupId>com.company.feature-toggles</groupId>
+            <artifactId>company-feature-toggles-sdk</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.togglz</groupId>
-            <artifactId>togglz-spring-boot-starter</artifactId>
-            <version>4.0.0-M1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.togglz</groupId>
-            <artifactId>togglz-console</artifactId>
-            <version>4.0.0-M1</version>
-        </dependency>
-
-
-
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
